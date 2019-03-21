@@ -27,22 +27,22 @@
 <body>
     <div id="my_naver_map" style="width:100%;height:500px;"></div>
 
-        <style>
-	.form-control{
-		width:24%;
-	}
-	</style>
-        <div class="group">
-            <input type="text" class="group-control" id="address" placeholder="주소">
-            <input type="text" class="group-control" id="content" placeholder="상호">
-        </div>
-        <div class="group">
-                <label for="Textarea1">리뷰 내용</label>
-                <textarea class="form-control" id="Textarea1" rows="3" ></textarea>
-              </div>
-        </div>
+    <style>
+        .form-control {
+            width: 24%;
+        }
+    </style>
+    <div class="group">
+        <input type="text" class="group-control" id="address" placeholder="주소">
+        <input type="text" class="group-control" id="content" placeholder="상호">
     </div>
-    <button id ="btn_save" class="btn btn-primary">저장</button>
+    <div class="group">
+        <label for="Textarea1">리뷰 내용</label>
+        <textarea class="form-control" id="Textarea1" rows="3"></textarea>
+    </div>
+    </div>
+    </div>
+    <button id="btn_save" class="btn btn-primary">저장</button>
     <script>
         var markers = {};
         var contents = {};
@@ -109,22 +109,22 @@
                 });
 
                 var data = $('#content').val();
-                
+
                 var infowindow = new naver.maps.InfoWindow({
                     content: data
                 });
 
                 markers[count] = marker;
                 contents[count] = infowindow;
-                
+
 
 
                 myMap.setCenter(new naver.maps.Point(item.point.x, item.point.y));
 
-                
-                    naver.maps.Event.addListener(markers[count], 'click', getClickHandler(count));
-                    count += 1;
-               
+
+                naver.maps.Event.addListener(markers[count], 'click', getClickHandler(count));
+                count += 1;
+
             });
 
         });
