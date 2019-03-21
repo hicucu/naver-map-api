@@ -18,6 +18,7 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
     <style>
     #card{
         border: 0;
@@ -25,10 +26,8 @@
     
     </style>
 </head>
-
 <body>
     <div id="my_naver_map" style="width:100%;height:500px;"></div>
-
     <style>
         .form-control {
             width: 24%;
@@ -36,26 +35,22 @@
     </style>
     <div class="group">
         <input type="text" class="group-control" id="address" placeholder="주소">
-        <input type="text" class="group-control" id="content" placeholder="상호">
+        <input type="text" class="group-control" id="shop" placeholder="상호">
     </div>
     <div class="group">
         <label for="Textarea1">리뷰 내용</label>
-        <textarea class="form-control" id="Textarea1" rows="3"></textarea>
+        <textarea class="form-control" id="content" rows="3"></textarea>
     </div>
     </div>
     </div>
     <button id="btn_save" class="btn btn-primary">저장</button>
-
     <script>
         var markers = {};
         var contents = {};
         var count = 0;
 
-        var saveData = {};
-
+        var saveData = {};             
         var saveKey = "review";
-
-
         var myOptions = {
             center: new naver.maps.LatLng(37.5010464, 126.9273182),
             zoom: 14,
@@ -67,21 +62,15 @@
             zoomControlOptions: {
                 position: naver.maps.Position.RIGHT_CENTER
             }
-
         };
-
-
         //지도 생성
         var myMap = new naver.maps.Map($('#my_naver_map')[0], myOptions);
-
         //지도 타입 결정
         myMap.setMapTypeId(naver.maps.MapTypeId.NORMAL);
-
         function getClickHandler(seq) {
             return function (e) {
                 var marker = markers[seq],
                     infoWindow = contents[seq];
-
                 if (infoWindow.getMap()) {
                     infoWindow.close();
                 } else {
@@ -89,38 +78,28 @@
                 }
             }
         }
-
         //geocoding
         $('#btn_save').click(function () {
-
             naver.maps.Service.geocode({
                 address: $('#address').val()
             }, function (status, response) {
                 if (status !== naver.maps.Service.Status.OK) {
                     return alert('Something wrong!');
                 }
-
                 var result = response.result, // 검색 결과의 컨테이너
                     items = result.items; // 검색 결과의 배열
                 console.log(items[0]);
-
                 var item = items[0];
-
                 // do Something
                 if ($('#content').val() == "")
                     return;
-
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.Point(item.point.x, item.point.y),
                     map: myMap
                 });
-
                 var data = $('#content').val();
                 var content = $('#content').val();
                 var shop = $('#shop').val();
-
-                console.log(typeof content)
-
 
                 var contentString = [
                     '<div id="card" class="card border-dark mb-3" style="max-width: 18rem, border: 0;" >',
@@ -137,34 +116,23 @@
 
                 ].join('');
 
-
-
                 var infowindow = new naver.maps.InfoWindow({
                     content: contentString
                 });
-
                 markers[count] = marker;
                 contents[count] = infowindow;
-
-
-
                 myMap.setCenter(new naver.maps.Point(item.point.x, item.point.y));
-
-
                 naver.maps.Event.addListener(markers[count], 'click', getClickHandler(count));
                 count += 1;
-
                 tempData = [$('#address').val(), $('#shop').val(), $('#content').val()];
-
                 saveData[count] = tempData;
 
-                jsonStringify = JSON.stringify(saveData);
-                localStorage.setItem(saveKey, jsonStringify);
+                jsonStringify = JSON.stringify(saveData);    
+                localStorage.setItem(saveKey, jsonStringify);            
+
                 count += 1;
             });
-
         });
     </script>
 </body>
-
 </html>
