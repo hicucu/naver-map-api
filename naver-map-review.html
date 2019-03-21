@@ -113,9 +113,7 @@
                     map: myMap
                 });
 
-<<<<<<< HEAD
                 var data = $('#content').val();
-=======
                 var content = $('#content').val();
                 var shop = $('#shop').val();
 
@@ -131,7 +129,6 @@
                     '</div>'
                 ].join('');
 
->>>>>>> fa353277327646948165cf3f64bb473baf4db388
 
                 var infowindow = new naver.maps.InfoWindow({
                     content: contentString
@@ -146,10 +143,7 @@
 
 
                 naver.maps.Event.addListener(markers[count], 'click', getClickHandler(count));
-<<<<<<< HEAD
                 count += 1;
-
-=======
 
                 tempData = [$('#address').val(), $('#shop').val(), $('#content').val()];
 
@@ -158,7 +152,6 @@
                 jsonStringify = JSON.stringify(saveData);    
                 localStorage.setItem(saveKey, jsonStringify);            
                 count += 1;
->>>>>>> fa353277327646948165cf3f64bb473baf4db388
             });
 
         });
